@@ -1,0 +1,73 @@
+// DAX measures on _Measures. Not executed in this repository.
+
+// Count of shipment lines.
+Total Shipment Lines = COUNTROWS ( fact_shipment_line )
+
+// Distinct articles present on shipment lines.
+Distinct Shipped Articles = DISTINCTCOUNT ( fact_shipment_line[article] )
+
+// Lines that are the first shipment line for an article.
+Intro Lines = SUM ( fact_shipment_line[is_intro_line] )
+
+// Shipment lines after an article's introduction line.
+Repeat Lines = [Total Shipment Lines] - [Intro Lines]
+
+// Sum of batch_price_rub. Declared line value, not revenue.
+Declared Batch Value RUB = SUM ( fact_shipment_line[batch_price_rub] )
+
+// Sum of shipment line quantity. Blank quantities are excluded.
+Total Quantity = SUM ( fact_shipment_line[quantity] )
+
+// Sum of net_weight_total. Blank totals are excluded.
+Total Net Weight = SUM ( fact_shipment_line[net_weight_total] )
+
+// Sum of gross_weight_total. Blank totals are excluded.
+Total Gross Weight = SUM ( fact_shipment_line[gross_weight_total] )
+
+// Lines where quantity times unit price disagrees with batch price.
+Price Mismatch Lines = SUM ( fact_shipment_line[price_mismatch] )
+
+// Lines where quantity times unit net weight disagrees with the net total.
+Net Weight Mismatch Lines = SUM ( fact_shipment_line[net_weight_mismatch] )
+
+// Lines where quantity times unit gross weight disagrees with the gross total.
+Gross Weight Mismatch Lines = SUM ( fact_shipment_line[gross_weight_mismatch] )
+
+// Lines where both weight totals are present and gross is below net.
+Gross Below Net Lines = SUM ( fact_shipment_line[gross_below_net] )
+
+// Rows in the canonical parts card.
+Catalog Parts = COUNTROWS ( dim_part )
+
+// Filled key fields divided by key-field slots.
+Average Catalog Completeness = DIVIDE ( SUM ( dim_part[filled_field_count] ), SUM ( dim_part[key_field_count] ) )
+
+// Parts with no tech_doc_path.
+Parts Missing Tech Doc = CALCULATE ( COUNTROWS ( dim_part ), dim_part[tech_doc_present] = 0 )
+
+// Parts with a blank name_en.
+Parts Missing English Name = CALCULATE ( COUNTROWS ( dim_part ), dim_part[has_name_en] = 0 )
+
+// Parts with a blank graph_description.
+Parts Missing Graph Description = CALCULATE ( COUNTROWS ( dim_part ), dim_part[has_graph_description] = 0 )
+
+// Parts with a blank tnved code.
+Parts Missing TNVED = CALCULATE ( COUNTROWS ( dim_part ), dim_part[has_tnved] = 0 )
+
+// Parts that name a tech-doc file but have no stored path.
+Filename Without Tech Doc Path = CALCULATE ( COUNTROWS ( dim_part ), dim_part[filename_without_path] = 1 )
+
+// Parts that appear in the archive and on no shipment line.
+Archive Only Parts = CALCULATE ( COUNTROWS ( dim_part ), dim_part[is_archive_only] = 1 )
+
+// Delivery-article pairs whose delivery is the article's first shipment.
+New Article Appearances = SUM ( fact_delivery_article[is_new_article] )
+
+// Delivery-article pairs that follow the article's first shipment.
+Repeat Article Appearances = SUM ( fact_delivery_article[is_repeat_article] )
+
+// Rows imported from archive workbooks.
+Archive Lines = COUNTROWS ( fact_archive_line )
+
+// Part and line data-quality issues exported by the analytics job.
+Quality Issue Rows = COUNTROWS ( data_quality_issue )

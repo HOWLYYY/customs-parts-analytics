@@ -1,0 +1,39 @@
+table fact_delivery_article
+	lineageTag: e9b6be49-ce6d-5bd0-a512-51fb2f2178d5
+
+	partition fact_delivery_article = m
+		mode: import
+		source =
+				let
+				    Root = DataRoot,
+				    Source = Csv.Document(File.Contents(Root & "/fact_delivery_article.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"delivery_id", Int64.Type}, {"article", type text}, {"is_new_article", Int64.Type}, {"is_repeat_article", Int64.Type}}, "en-US")
+				in
+				    Typed
+
+	column delivery_id
+		dataType: int64
+		lineageTag: 7fbc7100-6303-52fc-8583-03773ba09506
+		sourceColumn: delivery_id
+		summarizeBy: none
+
+	column article
+		dataType: string
+		lineageTag: 777ecfd6-680e-5c19-ab60-35d9bbaaa429
+		sourceColumn: article
+		summarizeBy: none
+
+	column is_new_article
+		dataType: int64
+		lineageTag: d5efbb95-10bc-5543-b3ef-a57e376ebc45
+		sourceColumn: is_new_article
+		summarizeBy: none
+
+	column is_repeat_article
+		dataType: int64
+		lineageTag: 768c2197-ce76-5e44-9cdc-da0ff3732444
+		sourceColumn: is_repeat_article
+		summarizeBy: none
+
+	annotation PBI_ResultType = Table

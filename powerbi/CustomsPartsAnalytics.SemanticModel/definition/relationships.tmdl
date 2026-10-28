@@ -1,0 +1,47 @@
+relationship line_delivery
+	fromColumn: fact_shipment_line.delivery_id
+	toColumn: dim_delivery.delivery_id
+	fromCardinality: many
+	toCardinality: one
+
+relationship line_part
+	fromColumn: fact_shipment_line.article
+	toColumn: dim_part.article
+	fromCardinality: many
+	toCardinality: one
+
+relationship summary_delivery
+	fromColumn: fact_delivery_summary.delivery_id
+	toColumn: dim_delivery.delivery_id
+	fromCardinality: many
+	toCardinality: one
+
+relationship appearance_delivery
+	fromColumn: fact_delivery_article.delivery_id
+	toColumn: dim_delivery.delivery_id
+	fromCardinality: many
+	toCardinality: one
+
+relationship appearance_part
+	fromColumn: fact_delivery_article.article
+	toColumn: dim_part.article
+	fromCardinality: many
+	toCardinality: one
+
+relationship archive_part
+	fromColumn: fact_archive_line.article
+	toColumn: dim_part.article
+	fromCardinality: many
+	toCardinality: one
+
+relationship issue_delivery
+	fromColumn: data_quality_issue.delivery_id
+	toColumn: dim_delivery.delivery_id
+	fromCardinality: many
+	toCardinality: one
+
+relationship issue_part
+	fromColumn: data_quality_issue.article
+	toColumn: dim_part.article
+	fromCardinality: many
+	toCardinality: one

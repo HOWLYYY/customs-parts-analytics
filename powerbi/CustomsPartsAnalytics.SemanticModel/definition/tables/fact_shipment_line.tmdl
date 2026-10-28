@@ -1,0 +1,202 @@
+table fact_shipment_line
+	lineageTag: 939fa79d-674b-5099-8a86-f594c33b7e09
+
+	partition fact_shipment_line = m
+		mode: import
+		source =
+				let
+				    Root = DataRoot,
+				    Source = Csv.Document(File.Contents(Root & "/fact_shipment_line.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"line_id", Int64.Type}, {"delivery_id", Int64.Type}, {"article", type text}, {"name_en", type text}, {"quantity", type number}, {"unit_price_rub", type number}, {"batch_price_rub", type number}, {"net_weight_unit", type number}, {"net_weight_total", type number}, {"gross_weight_unit", type number}, {"gross_weight_total", type number}, {"country_origin", type text}, {"tnved", type text}, {"is_intro_line", Int64.Type}, {"price_mismatch", Int64.Type}, {"price_check_applicable", Int64.Type}, {"net_weight_mismatch", Int64.Type}, {"net_weight_check_applicable", Int64.Type}, {"gross_weight_mismatch", Int64.Type}, {"gross_weight_check_applicable", Int64.Type}, {"gross_below_net", Int64.Type}, {"incomplete_price", Int64.Type}, {"incomplete_net_weight", Int64.Type}, {"missing_name_en", Int64.Type}, {"missing_name_ru", Int64.Type}, {"missing_graph_description", Int64.Type}, {"missing_tnved", Int64.Type}, {"missing_quantity", Int64.Type}, {"nonpositive_unit_price", Int64.Type}, {"nonpositive_batch_price", Int64.Type}}, "en-US")
+				in
+				    Typed
+
+	column line_id
+		dataType: int64
+		lineageTag: 6ad820b7-9c4f-51fa-b4b1-1803f4b33b44
+		sourceColumn: line_id
+		summarizeBy: none
+
+	column delivery_id
+		dataType: int64
+		lineageTag: dac58136-c042-5c1f-a1ad-7d4e7aa19110
+		sourceColumn: delivery_id
+		summarizeBy: none
+
+	column article
+		dataType: string
+		lineageTag: 6673df0f-6410-5f7f-ab15-987a7e328c24
+		sourceColumn: article
+		summarizeBy: none
+
+	column name_en
+		dataType: string
+		lineageTag: 66a57810-76b9-5f09-b39b-c9ce4d9a7fb6
+		sourceColumn: name_en
+		summarizeBy: none
+
+	column quantity
+		dataType: double
+		formatString: "#,0.00"
+		lineageTag: c2476c66-a168-5fca-939d-a27ee4224d7e
+		sourceColumn: quantity
+		summarizeBy: none
+
+	column unit_price_rub
+		dataType: double
+		formatString: "#,0.00"
+		lineageTag: 45e71b9c-939f-5a83-ad3f-3c9a462da3da
+		sourceColumn: unit_price_rub
+		summarizeBy: none
+
+	column batch_price_rub
+		dataType: double
+		formatString: "#,0.00"
+		lineageTag: b2976319-f817-5ef8-999a-8cd15b4f5c58
+		sourceColumn: batch_price_rub
+		summarizeBy: none
+
+	column net_weight_unit
+		dataType: double
+		formatString: "#,0.00"
+		lineageTag: 9628b934-b2ab-565b-8162-f692c39acdf2
+		sourceColumn: net_weight_unit
+		summarizeBy: none
+
+	column net_weight_total
+		dataType: double
+		formatString: "#,0.00"
+		lineageTag: 5a981174-d9ad-53c2-9dcd-30d44eaf2e49
+		sourceColumn: net_weight_total
+		summarizeBy: none
+
+	column gross_weight_unit
+		dataType: double
+		formatString: "#,0.00"
+		lineageTag: 052f3587-7b0d-5981-970d-0bfffece0cbf
+		sourceColumn: gross_weight_unit
+		summarizeBy: none
+
+	column gross_weight_total
+		dataType: double
+		formatString: "#,0.00"
+		lineageTag: 8ee1cf82-e5de-5dd3-91b6-6d643d0af699
+		sourceColumn: gross_weight_total
+		summarizeBy: none
+
+	column country_origin
+		dataType: string
+		lineageTag: a1f22232-f480-5720-a260-da7667cb20a0
+		sourceColumn: country_origin
+		summarizeBy: none
+
+	column tnved
+		dataType: string
+		lineageTag: 4a353cf9-a71b-5063-8c1e-b6081b34a148
+		sourceColumn: tnved
+		summarizeBy: none
+
+	column is_intro_line
+		dataType: int64
+		lineageTag: 01410bc8-333a-5298-8e3b-44875a0994a9
+		sourceColumn: is_intro_line
+		summarizeBy: none
+
+	column price_mismatch
+		dataType: int64
+		lineageTag: e6665c24-3775-5eae-b91e-22cafb35ebd8
+		sourceColumn: price_mismatch
+		summarizeBy: none
+
+	column price_check_applicable
+		dataType: int64
+		lineageTag: 606020eb-2ab1-5cf0-ac44-cef1b1c2b9b4
+		sourceColumn: price_check_applicable
+		summarizeBy: none
+
+	column net_weight_mismatch
+		dataType: int64
+		lineageTag: 86e5c306-5758-50d1-89c6-6fea0294e098
+		sourceColumn: net_weight_mismatch
+		summarizeBy: none
+
+	column net_weight_check_applicable
+		dataType: int64
+		lineageTag: 92037778-92fc-52fd-9d79-6eff8ff88a5d
+		sourceColumn: net_weight_check_applicable
+		summarizeBy: none
+
+	column gross_weight_mismatch
+		dataType: int64
+		lineageTag: 4c5e31dc-388c-5b9e-9d55-75e06ba22bfb
+		sourceColumn: gross_weight_mismatch
+		summarizeBy: none
+
+	column gross_weight_check_applicable
+		dataType: int64
+		lineageTag: ae325da1-f43e-5ac6-8d2d-c7ecb74b6e3c
+		sourceColumn: gross_weight_check_applicable
+		summarizeBy: none
+
+	column gross_below_net
+		dataType: int64
+		lineageTag: b3fcce2b-8432-56ef-81c5-43f1b7efc3ed
+		sourceColumn: gross_below_net
+		summarizeBy: none
+
+	column incomplete_price
+		dataType: int64
+		lineageTag: 9d7b3c2b-2a25-5c6f-a727-8ac54dacfd5a
+		sourceColumn: incomplete_price
+		summarizeBy: none
+
+	column incomplete_net_weight
+		dataType: int64
+		lineageTag: 0c8e2d02-c1c4-5baa-9b57-96a643425abd
+		sourceColumn: incomplete_net_weight
+		summarizeBy: none
+
+	column missing_name_en
+		dataType: int64
+		lineageTag: 5f444f01-c587-561b-b2ab-e48a9a792333
+		sourceColumn: missing_name_en
+		summarizeBy: none
+
+	column missing_name_ru
+		dataType: int64
+		lineageTag: c7df7819-1387-51dd-ad0e-9724607f2d53
+		sourceColumn: missing_name_ru
+		summarizeBy: none
+
+	column missing_graph_description
+		dataType: int64
+		lineageTag: 869b2e1d-7a35-5161-a232-e68a9fec8251
+		sourceColumn: missing_graph_description
+		summarizeBy: none
+
+	column missing_tnved
+		dataType: int64
+		lineageTag: 1d5219b4-250e-5b88-8741-c91dd39924c5
+		sourceColumn: missing_tnved
+		summarizeBy: none
+
+	column missing_quantity
+		dataType: int64
+		lineageTag: b1340d0b-b749-53eb-96b1-8555426e97bd
+		sourceColumn: missing_quantity
+		summarizeBy: none
+
+	column nonpositive_unit_price
+		dataType: int64
+		lineageTag: 2ef69756-319c-5bba-8ef9-4d2954dfe964
+		sourceColumn: nonpositive_unit_price
+		summarizeBy: none
+
+	column nonpositive_batch_price
+		dataType: int64
+		lineageTag: f730d45c-bd0e-5117-b32f-a7e93f044b1a
+		sourceColumn: nonpositive_batch_price
+		summarizeBy: none
+
+	annotation PBI_ResultType = Table

@@ -1,0 +1,9 @@
+**/.pbi/localSettings.json
+**/.pbi/cache.abf
+**/.pbi/unappliedChanges.json
+.DS_Store
+__pycache__/
+*.py[cod]
+.venv/
+.env
+analytics_output/

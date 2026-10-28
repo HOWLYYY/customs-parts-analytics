@@ -1,0 +1,38 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "name": "overview_card_09",
+  "position": {
+    "x": 770,
+    "y": 170,
+    "z": 8,
+    "height": 130,
+    "width": 230,
+    "tabOrder": 8
+  },
+  "visual": {
+    "visualType": "card",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Net Weight Mismatch Lines"
+                }
+              },
+              "queryRef": "_Measures.Net Weight Mismatch Lines",
+              "nativeQueryRef": "Net Weight Mismatch Lines"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

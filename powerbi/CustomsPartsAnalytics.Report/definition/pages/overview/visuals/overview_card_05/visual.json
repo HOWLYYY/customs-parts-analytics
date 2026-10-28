@@ -1,0 +1,38 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "name": "overview_card_05",
+  "position": {
+    "x": 1020,
+    "y": 20,
+    "z": 4,
+    "height": 130,
+    "width": 230,
+    "tabOrder": 4
+  },
+  "visual": {
+    "visualType": "card",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Declared Batch Value RUB"
+                }
+              },
+              "queryRef": "_Measures.Declared Batch Value RUB",
+              "nativeQueryRef": "Declared Batch Value RUB"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

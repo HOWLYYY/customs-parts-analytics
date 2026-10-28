@@ -1,0 +1,57 @@
+table data_quality_issue
+	lineageTag: f7b58ffa-5b25-5991-939b-b5a5d43e9eb0
+
+	partition data_quality_issue = m
+		mode: import
+		source =
+				let
+				    Root = DataRoot,
+				    Source = Csv.Document(File.Contents(Root & "/data_quality_issue.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"issue_id", Int64.Type}, {"grain", type text}, {"entity_id", type text}, {"article", type text}, {"delivery_id", Int64.Type}, {"delivery_folder", type text}, {"issue_type", type text}}, "en-US")
+				in
+				    Typed
+
+	column issue_id
+		dataType: int64
+		lineageTag: 0858cdb1-6b88-5df8-b39a-6cdd267ae5d7
+		sourceColumn: issue_id
+		summarizeBy: none
+
+	column grain
+		dataType: string
+		lineageTag: 76e5c512-2553-59c9-93a1-3b3dddf3bb19
+		sourceColumn: grain
+		summarizeBy: none
+
+	column entity_id
+		dataType: string
+		lineageTag: 1f713f48-aba9-5321-a605-c8ea03b24a6a
+		sourceColumn: entity_id
+		summarizeBy: none
+
+	column article
+		dataType: string
+		lineageTag: 7466746d-90c6-5556-a5ea-f4299b483dde
+		sourceColumn: article
+		summarizeBy: none
+
+	column delivery_id
+		dataType: int64
+		lineageTag: 6cfabf7d-8fb8-5f0d-a1f7-fc44b94d4a91
+		sourceColumn: delivery_id
+		summarizeBy: none
+
+	column delivery_folder
+		dataType: string
+		lineageTag: f3095063-3473-5c64-90c2-d43880a00de1
+		sourceColumn: delivery_folder
+		summarizeBy: none
+
+	column issue_type
+		dataType: string
+		lineageTag: 7fea13ed-45e8-5256-80c7-03cc24c72791
+		sourceColumn: issue_type
+		summarizeBy: none
+
+	annotation PBI_ResultType = Table

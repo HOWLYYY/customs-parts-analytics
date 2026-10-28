@@ -1,0 +1,468 @@
+{
+  "dataset_label": "synthetic_october_2026_portfolio",
+  "dataset_notice": "Synthetic data for an October 2026 portfolio extension. Not production customs history.",
+  "portfolio_extension": "October 2026",
+  "kpis": {
+    "shipment_line_count": 10,
+    "distinct_shipped_articles": 5,
+    "intro_line_count": 5,
+    "repeat_line_count": 5,
+    "declared_batch_value_rub": 2330.0,
+    "total_quantity": 41.0,
+    "total_net_weight": 9.5,
+    "total_gross_weight": 14.75,
+    "price_applicable_lines": 8,
+    "price_mismatch_lines": 1,
+    "net_weight_applicable_lines": 8,
+    "net_weight_mismatch_lines": 1,
+    "gross_weight_applicable_lines": 7,
+    "gross_weight_mismatch_lines": 1,
+    "gross_below_net_lines": 1,
+    "incomplete_price_lines": 2,
+    "incomplete_net_weight_lines": 1,
+    "part_count": 6,
+    "average_catalog_completeness": 0.8333333333333334,
+    "filled_key_fields": 35,
+    "key_field_slots": 42,
+    "parts_missing_tech_doc": 3,
+    "parts_missing_name_en": 2,
+    "parts_missing_name_ru": 0,
+    "parts_missing_graph_description": 1,
+    "parts_missing_tnved": 1,
+    "parts_filename_without_path": 1,
+    "archive_only_parts": 1,
+    "parts_with_shipment": 5,
+    "new_article_appearances": 5,
+    "repeat_article_appearances": 3,
+    "articles_in_multiple_deliveries": 2,
+    "archive_line_count": 2,
+    "archive_distinct_articles": 2,
+    "archive_articles_also_shipped": 1,
+    "quality_issue_rows": 22
+  },
+  "definitions": {
+    "catalog_completeness": "A key field is filled when it is not null and, for text, not blank. The seven key fields are name_en, name_ru, graph_description, tnved, manufacturer, country_origin, and tech_doc_path. Average completeness is filled key fields divided by parts times 7.",
+    "repeat_vs_new": "Deliveries are ordered by imported_at, then id. An article's introduction line is its earliest shipment line in that order. A delivery-article pair is new when that delivery is the article's first shipment; otherwise it is a repeat appearance. The sum of new appearances equals the number of distinct shipped articles.",
+    "declared_batch_value": "Declared batch value is the sum of shipment_lines.batch_price_rub. Blank amounts are left out of the sum. This is not revenue, margin, or turnover.",
+    "price_consistency": "A price check applies when quantity, unit_price_rub, and batch_price_rub are all present. It mismatches when the absolute gap between quantity * unit_price_rub and batch_price_rub is greater than max(0.05, 0.005 * abs(batch_price_rub)).",
+    "weight_consistency": "A weight check applies only when quantity, the unit weight, and the total weight are all present. Absence of gross weight is not itself an issue. The mismatch tolerance is max(0.001, 0.005 * abs(total)). Gross below net applies when both totals are present and gross_weight_total + 0.001 < net_weight_total.",
+    "missing_docs": "A part is missing its tech doc when tech_doc_path is blank. Filename without path means tech_doc_filename is filled and tech_doc_path is not. Archive-only parts are articles present in archive_lines and absent from shipment_lines."
+  },
+  "reconciliations": [
+    {
+      "name": "line_count_matches_summary",
+      "ok": true,
+      "detail": "sum of delivery line counts equals shipment lines"
+    },
+    {
+      "name": "new_appearances_match_distinct_articles",
+      "ok": true,
+      "detail": "each shipped article is new in exactly one delivery"
+    },
+    {
+      "name": "intro_lines_match_distinct_articles",
+      "ok": true,
+      "detail": "each shipped article has one introduction line"
+    },
+    {
+      "name": "intro_plus_repeat_lines",
+      "ok": true,
+      "detail": "introduction lines and later lines cover every shipment line"
+    },
+    {
+      "name": "delivery_new_plus_repeat_articles",
+      "ok": true,
+      "detail": "new and repeat article counts partition each delivery"
+    },
+    {
+      "name": "delivery_intro_plus_repeat_lines",
+      "ok": true,
+      "detail": "introduction and later lines partition each delivery"
+    },
+    {
+      "name": "summary_batch_matches_lines",
+      "ok": true,
+      "detail": "delivery declared values add up to the catalog total"
+    },
+    {
+      "name": "summary_quantity_matches_lines",
+      "ok": true,
+      "detail": "delivery quantities add up to the catalog total"
+    },
+    {
+      "name": "summary_new_matches_kpi",
+      "ok": true,
+      "detail": "delivery new-article counts add up"
+    },
+    {
+      "name": "summary_repeat_matches_kpi",
+      "ok": true,
+      "detail": "delivery repeat-article counts add up"
+    },
+    {
+      "name": "appearance_flags_cover_pairs",
+      "ok": true,
+      "detail": "every delivery-article pair is either new or repeat"
+    },
+    {
+      "name": "completeness_ratio",
+      "ok": true,
+      "detail": "average completeness equals filled fields over slots"
+    },
+    {
+      "name": "shipped_part_flag",
+      "ok": true,
+      "detail": "has_shipment counts parts that appear on a shipment line"
+    },
+    {
+      "name": "price_mismatch_issues",
+      "ok": true,
+      "detail": "price mismatch issues match the line flag"
+    },
+    {
+      "name": "net_mismatch_issues",
+      "ok": true,
+      "detail": "net weight mismatch issues match the line flag"
+    },
+    {
+      "name": "gross_mismatch_issues",
+      "ok": true,
+      "detail": "gross weight mismatch issues match the line flag"
+    },
+    {
+      "name": "composition_lines",
+      "ok": true,
+      "detail": "country and TNVED compositions cover every shipment line"
+    },
+    {
+      "name": "composition_value",
+      "ok": true,
+      "detail": "country declared values add up to the catalog total"
+    }
+  ],
+  "compositions": {
+    "country": [
+      {
+        "label": "DE",
+        "line_count": 6,
+        "distinct_articles": 2,
+        "declared_batch_value_rub": 1990.0
+      },
+      {
+        "label": "CN",
+        "line_count": 3,
+        "distinct_articles": 2,
+        "declared_batch_value_rub": 340.0
+      },
+      {
+        "label": "IT",
+        "line_count": 1,
+        "distinct_articles": 1,
+        "declared_batch_value_rub": 0.0
+      }
+    ],
+    "tnved": [
+      {
+        "label": "8482109000",
+        "line_count": 4,
+        "distinct_articles": 1,
+        "declared_batch_value_rub": 1900.0
+      },
+      {
+        "label": "4016930000",
+        "line_count": 3,
+        "distinct_articles": 2,
+        "declared_batch_value_rub": 340.0
+      },
+      {
+        "label": "8484100000",
+        "line_count": 2,
+        "distinct_articles": 1,
+        "declared_batch_value_rub": 90.0
+      },
+      {
+        "label": "(missing)",
+        "line_count": 1,
+        "distinct_articles": 1,
+        "declared_batch_value_rub": 0.0
+      }
+    ]
+  },
+  "deliveries": [
+    {
+      "delivery_id": 1,
+      "folder_name": "SHIP-A",
+      "imported_at": "2026-01-15 09:00:00",
+      "sort_order": 1,
+      "line_count": 4,
+      "distinct_articles": 3,
+      "new_articles": 3,
+      "repeat_articles": 0,
+      "intro_lines": 3,
+      "repeat_lines": 1,
+      "total_quantity": 21.0,
+      "declared_batch_value_rub": 1740.0,
+      "total_net_weight": 5.25,
+      "total_gross_weight": 9.5,
+      "price_mismatch_lines": 1,
+      "net_weight_mismatch_lines": 0,
+      "gross_weight_mismatch_lines": 0,
+      "gross_below_net_lines": 0,
+      "lines_missing_name_en": 1,
+      "lines_missing_graph_description": 0,
+      "lines_missing_tnved": 0,
+      "distinct_tnved": 2,
+      "distinct_countries": 2
+    },
+    {
+      "delivery_id": 2,
+      "folder_name": "SHIP-B",
+      "imported_at": "2026-02-20 09:00:00",
+      "sort_order": 2,
+      "line_count": 3,
+      "distinct_articles": 3,
+      "new_articles": 1,
+      "repeat_articles": 2,
+      "intro_lines": 1,
+      "repeat_lines": 2,
+      "total_quantity": 11.0,
+      "declared_batch_value_rub": 200.0,
+      "total_net_weight": 2.0,
+      "total_gross_weight": 0.75,
+      "price_mismatch_lines": 0,
+      "net_weight_mismatch_lines": 1,
+      "gross_weight_mismatch_lines": 1,
+      "gross_below_net_lines": 1,
+      "lines_missing_name_en": 1,
+      "lines_missing_graph_description": 1,
+      "lines_missing_tnved": 1,
+      "distinct_tnved": 2,
+      "distinct_countries": 3
+    },
+    {
+      "delivery_id": 3,
+      "folder_name": "SHIP-C",
+      "imported_at": "2026-03-10 09:00:00",
+      "sort_order": 3,
+      "line_count": 3,
+      "distinct_articles": 2,
+      "new_articles": 1,
+      "repeat_articles": 1,
+      "intro_lines": 1,
+      "repeat_lines": 2,
+      "total_quantity": 9.0,
+      "declared_batch_value_rub": 390.0,
+      "total_net_weight": 2.25,
+      "total_gross_weight": 4.5,
+      "price_mismatch_lines": 0,
+      "net_weight_mismatch_lines": 0,
+      "gross_weight_mismatch_lines": 0,
+      "gross_below_net_lines": 0,
+      "lines_missing_name_en": 0,
+      "lines_missing_graph_description": 0,
+      "lines_missing_tnved": 0,
+      "distinct_tnved": 2,
+      "distinct_countries": 1
+    }
+  ],
+  "issues": [
+    {
+      "grain": "line",
+      "entity_id": "2",
+      "article": "HIC-200",
+      "delivery_id": 1,
+      "delivery_folder": "SHIP-A",
+      "issue_type": "missing_name_en",
+      "issue_id": 1
+    },
+    {
+      "grain": "line",
+      "entity_id": "3",
+      "article": "HIC-600",
+      "delivery_id": 1,
+      "delivery_folder": "SHIP-A",
+      "issue_type": "price_mismatch",
+      "issue_id": 2
+    },
+    {
+      "grain": "line",
+      "entity_id": "6",
+      "article": "HIC-200",
+      "delivery_id": 2,
+      "delivery_folder": "SHIP-B",
+      "issue_type": "gross_below_net",
+      "issue_id": 3
+    },
+    {
+      "grain": "line",
+      "entity_id": "6",
+      "article": "HIC-200",
+      "delivery_id": 2,
+      "delivery_folder": "SHIP-B",
+      "issue_type": "gross_weight_mismatch",
+      "issue_id": 4
+    },
+    {
+      "grain": "line",
+      "entity_id": "6",
+      "article": "HIC-200",
+      "delivery_id": 2,
+      "delivery_folder": "SHIP-B",
+      "issue_type": "missing_name_en",
+      "issue_id": 5
+    },
+    {
+      "grain": "line",
+      "entity_id": "6",
+      "article": "HIC-200",
+      "delivery_id": 2,
+      "delivery_folder": "SHIP-B",
+      "issue_type": "net_weight_mismatch",
+      "issue_id": 6
+    },
+    {
+      "grain": "line",
+      "entity_id": "7",
+      "article": "HIC-300",
+      "delivery_id": 2,
+      "delivery_folder": "SHIP-B",
+      "issue_type": "incomplete_net_weight",
+      "issue_id": 7
+    },
+    {
+      "grain": "line",
+      "entity_id": "7",
+      "article": "HIC-300",
+      "delivery_id": 2,
+      "delivery_folder": "SHIP-B",
+      "issue_type": "incomplete_price",
+      "issue_id": 8
+    },
+    {
+      "grain": "line",
+      "entity_id": "7",
+      "article": "HIC-300",
+      "delivery_id": 2,
+      "delivery_folder": "SHIP-B",
+      "issue_type": "missing_graph_description",
+      "issue_id": 9
+    },
+    {
+      "grain": "line",
+      "entity_id": "7",
+      "article": "HIC-300",
+      "delivery_id": 2,
+      "delivery_folder": "SHIP-B",
+      "issue_type": "missing_tnved",
+      "issue_id": 10
+    },
+    {
+      "grain": "line",
+      "entity_id": "10",
+      "article": "HIC-400",
+      "delivery_id": 3,
+      "delivery_folder": "SHIP-C",
+      "issue_type": "incomplete_price",
+      "issue_id": 11
+    },
+    {
+      "grain": "line",
+      "entity_id": "10",
+      "article": "HIC-400",
+      "delivery_id": 3,
+      "delivery_folder": "SHIP-C",
+      "issue_type": "missing_quantity",
+      "issue_id": 12
+    },
+    {
+      "grain": "line",
+      "entity_id": "9",
+      "article": "HIC-400",
+      "delivery_id": 3,
+      "delivery_folder": "SHIP-C",
+      "issue_type": "nonpositive_batch_price",
+      "issue_id": 13
+    },
+    {
+      "grain": "line",
+      "entity_id": "9",
+      "article": "HIC-400",
+      "delivery_id": 3,
+      "delivery_folder": "SHIP-C",
+      "issue_type": "nonpositive_unit_price",
+      "issue_id": 14
+    },
+    {
+      "grain": "part",
+      "entity_id": "HIC-200",
+      "article": "HIC-200",
+      "delivery_id": null,
+      "delivery_folder": "",
+      "issue_type": "missing_name_en",
+      "issue_id": 15
+    },
+    {
+      "grain": "part",
+      "entity_id": "HIC-200",
+      "article": "HIC-200",
+      "delivery_id": null,
+      "delivery_folder": "",
+      "issue_type": "missing_tech_doc",
+      "issue_id": 16
+    },
+    {
+      "grain": "part",
+      "entity_id": "HIC-300",
+      "article": "HIC-300",
+      "delivery_id": null,
+      "delivery_folder": "",
+      "issue_type": "filename_without_path",
+      "issue_id": 17
+    },
+    {
+      "grain": "part",
+      "entity_id": "HIC-300",
+      "article": "HIC-300",
+      "delivery_id": null,
+      "delivery_folder": "",
+      "issue_type": "missing_graph_description",
+      "issue_id": 18
+    },
+    {
+      "grain": "part",
+      "entity_id": "HIC-300",
+      "article": "HIC-300",
+      "delivery_id": null,
+      "delivery_folder": "",
+      "issue_type": "missing_tech_doc",
+      "issue_id": 19
+    },
+    {
+      "grain": "part",
+      "entity_id": "HIC-300",
+      "article": "HIC-300",
+      "delivery_id": null,
+      "delivery_folder": "",
+      "issue_type": "missing_tnved",
+      "issue_id": 20
+    },
+    {
+      "grain": "part",
+      "entity_id": "HIC-500",
+      "article": "HIC-500",
+      "delivery_id": null,
+      "delivery_folder": "",
+      "issue_type": "missing_name_en",
+      "issue_id": 21
+    },
+    {
+      "grain": "part",
+      "entity_id": "HIC-500",
+      "article": "HIC-500",
+      "delivery_id": null,
+      "delivery_folder": "",
+      "issue_type": "missing_tech_doc",
+      "issue_id": 22
+    }
+  ]
+}

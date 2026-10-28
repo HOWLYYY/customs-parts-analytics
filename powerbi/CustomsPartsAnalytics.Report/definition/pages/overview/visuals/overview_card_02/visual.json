@@ -1,0 +1,38 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "name": "overview_card_02",
+  "position": {
+    "x": 270,
+    "y": 20,
+    "z": 1,
+    "height": 130,
+    "width": 230,
+    "tabOrder": 1
+  },
+  "visual": {
+    "visualType": "card",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Distinct Shipped Articles"
+                }
+              },
+              "queryRef": "_Measures.Distinct Shipped Articles",
+              "nativeQueryRef": "Distinct Shipped Articles"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

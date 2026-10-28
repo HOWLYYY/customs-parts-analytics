@@ -1,0 +1,157 @@
+table fact_delivery_summary
+	lineageTag: 383fc9a5-a18e-5d21-a07e-dc964432cf89
+
+	partition fact_delivery_summary = m
+		mode: import
+		source =
+				let
+				    Root = DataRoot,
+				    Source = Csv.Document(File.Contents(Root & "/fact_delivery_summary.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"delivery_id", Int64.Type}, {"folder_name", type text}, {"imported_at", type text}, {"sort_order", Int64.Type}, {"line_count", Int64.Type}, {"distinct_articles", Int64.Type}, {"new_articles", Int64.Type}, {"repeat_articles", Int64.Type}, {"intro_lines", Int64.Type}, {"repeat_lines", Int64.Type}, {"total_quantity", type number}, {"declared_batch_value_rub", type number}, {"total_net_weight", type number}, {"total_gross_weight", type number}, {"price_mismatch_lines", Int64.Type}, {"net_weight_mismatch_lines", Int64.Type}, {"gross_weight_mismatch_lines", Int64.Type}, {"gross_below_net_lines", Int64.Type}, {"lines_missing_name_en", Int64.Type}, {"lines_missing_graph_description", Int64.Type}, {"lines_missing_tnved", Int64.Type}, {"distinct_tnved", Int64.Type}, {"distinct_countries", Int64.Type}}, "en-US")
+				in
+				    Typed
+
+	column delivery_id
+		dataType: int64
+		lineageTag: 73f92824-2498-5dd5-aeca-12132e5afc27
+		sourceColumn: delivery_id
+		summarizeBy: none
+
+	column folder_name
+		dataType: string
+		lineageTag: 5fc4f956-f3ba-5d16-90d0-a1e75949e8e0
+		sourceColumn: folder_name
+		summarizeBy: none
+
+	column imported_at
+		dataType: string
+		lineageTag: d32ed140-fb97-5a38-83c2-2421684f81a9
+		sourceColumn: imported_at
+		summarizeBy: none
+
+	column sort_order
+		dataType: int64
+		lineageTag: 6b01a39c-08ca-5995-8578-de6fa75d2f4f
+		sourceColumn: sort_order
+		summarizeBy: none
+
+	column line_count
+		dataType: int64
+		lineageTag: ffa47cdb-b3de-5cff-95f1-05edd4e3cb70
+		sourceColumn: line_count
+		summarizeBy: none
+
+	column distinct_articles
+		dataType: int64
+		lineageTag: a3962add-b1f8-5cfb-a796-1776649c42b4
+		sourceColumn: distinct_articles
+		summarizeBy: none
+
+	column new_articles
+		dataType: int64
+		lineageTag: bf53fdb9-ac71-500c-a1f5-af8f7653f923
+		sourceColumn: new_articles
+		summarizeBy: none
+
+	column repeat_articles
+		dataType: int64
+		lineageTag: 3ce93eb8-dc60-5ecf-9ef3-c3effde185c4
+		sourceColumn: repeat_articles
+		summarizeBy: none
+
+	column intro_lines
+		dataType: int64
+		lineageTag: 5cc09948-0f5c-5064-9b9d-eaf55699228e
+		sourceColumn: intro_lines
+		summarizeBy: none
+
+	column repeat_lines
+		dataType: int64
+		lineageTag: c88e823d-bf69-533d-a386-a4efddd54d64
+		sourceColumn: repeat_lines
+		summarizeBy: none
+
+	column total_quantity
+		dataType: double
+		formatString: "#,0.00"
+		lineageTag: ab4139ef-302e-53a5-9f1c-c77e037a1707
+		sourceColumn: total_quantity
+		summarizeBy: none
+
+	column declared_batch_value_rub
+		dataType: double
+		formatString: "#,0.00"
+		lineageTag: 357403cc-a16a-5289-af5c-c18bb537cc55
+		sourceColumn: declared_batch_value_rub
+		summarizeBy: none
+
+	column total_net_weight
+		dataType: double
+		formatString: "#,0.00"
+		lineageTag: f0f6423e-1073-5edd-82fa-0e3050519aee
+		sourceColumn: total_net_weight
+		summarizeBy: none
+
+	column total_gross_weight
+		dataType: double
+		formatString: "#,0.00"
+		lineageTag: 5b1da13f-f1f3-51b4-becb-25edd2f1aba1
+		sourceColumn: total_gross_weight
+		summarizeBy: none
+
+	column price_mismatch_lines
+		dataType: int64
+		lineageTag: d3db764d-05bf-5988-841a-7603eb01acd5
+		sourceColumn: price_mismatch_lines
+		summarizeBy: none
+
+	column net_weight_mismatch_lines
+		dataType: int64
+		lineageTag: 99691fed-0666-5266-a8a9-51284e6000f0
+		sourceColumn: net_weight_mismatch_lines
+		summarizeBy: none
+
+	column gross_weight_mismatch_lines
+		dataType: int64
+		lineageTag: ba7e4a68-193a-5fc1-bd44-1293b954f7e3
+		sourceColumn: gross_weight_mismatch_lines
+		summarizeBy: none
+
+	column gross_below_net_lines
+		dataType: int64
+		lineageTag: 0e0e97cc-0532-518a-9a88-2a866bafe0c7
+		sourceColumn: gross_below_net_lines
+		summarizeBy: none
+
+	column lines_missing_name_en
+		dataType: int64
+		lineageTag: 1e640001-8280-5c0b-af29-8f934461c0c6
+		sourceColumn: lines_missing_name_en
+		summarizeBy: none
+
+	column lines_missing_graph_description
+		dataType: int64
+		lineageTag: 5509c1fa-81bb-5c4a-a76f-c7ad01e8052c
+		sourceColumn: lines_missing_graph_description
+		summarizeBy: none
+
+	column lines_missing_tnved
+		dataType: int64
+		lineageTag: 3ade1973-42a5-51f2-bf8f-02a42da78dd2
+		sourceColumn: lines_missing_tnved
+		summarizeBy: none
+
+	column distinct_tnved
+		dataType: int64
+		lineageTag: d195faa8-e21f-5238-8c86-1912a870a18c
+		sourceColumn: distinct_tnved
+		summarizeBy: none
+
+	column distinct_countries
+		dataType: int64
+		lineageTag: ba6ecdfe-20ae-52cf-b94d-ce9693bc123e
+		sourceColumn: distinct_countries
+		summarizeBy: none
+
+	annotation PBI_ResultType = Table

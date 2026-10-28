@@ -1,0 +1,7 @@
+article,name_en,name_ru,graph_description,tnved,manufacturer,country_origin,tech_doc_present,filename_without_path,filled_field_count,key_field_count,completeness_ratio,has_name_en,has_name_ru,has_graph_description,has_tnved,has_manufacturer,has_country_origin,has_shipment,is_archive_only
+HIC-100,Bearing,Подшипник,Bearing assembly,8482109000,Helios Works,DE,1,0,7,7,1,1,1,1,1,1,1,1,0
+HIC-200,,Уплотнение,Rubber seal,4016930000,Helios Works,CN,0,0,5,7,0.714285714286,0,1,1,1,1,1,1,0
+HIC-300,Filter element,Фильтр,,,Helios Works,IT,0,1,4,7,0.571428571429,1,1,0,0,1,1,1,0
+HIC-400,Gasket kit,Прокладка,Gasket kit,8484100000,Helios Works,DE,1,0,7,7,1,1,1,1,1,1,1,1,0
+HIC-500,,Клапан,Valve body,8481800000,Archive Mills,PL,0,0,5,7,0.714285714286,0,1,1,1,1,1,0,1
+HIC-600,O-ring,Кольцо,O-ring,4016930000,Helios Works,CN,1,0,7,7,1,1,1,1,1,1,1,1,0

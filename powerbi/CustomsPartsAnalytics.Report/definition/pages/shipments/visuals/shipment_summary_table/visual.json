@@ -1,0 +1,136 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "name": "shipment_summary_table",
+  "position": {
+    "x": 20,
+    "y": 20,
+    "z": 0,
+    "height": 420,
+    "width": 760,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_delivery_summary"
+                    }
+                  },
+                  "Property": "folder_name"
+                }
+              },
+              "queryRef": "fact_delivery_summary.folder_name",
+              "nativeQueryRef": "folder_name"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_delivery_summary"
+                    }
+                  },
+                  "Property": "line_count"
+                }
+              },
+              "queryRef": "fact_delivery_summary.line_count",
+              "nativeQueryRef": "line_count"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_delivery_summary"
+                    }
+                  },
+                  "Property": "distinct_articles"
+                }
+              },
+              "queryRef": "fact_delivery_summary.distinct_articles",
+              "nativeQueryRef": "distinct_articles"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_delivery_summary"
+                    }
+                  },
+                  "Property": "new_articles"
+                }
+              },
+              "queryRef": "fact_delivery_summary.new_articles",
+              "nativeQueryRef": "new_articles"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_delivery_summary"
+                    }
+                  },
+                  "Property": "repeat_articles"
+                }
+              },
+              "queryRef": "fact_delivery_summary.repeat_articles",
+              "nativeQueryRef": "repeat_articles"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_delivery_summary"
+                    }
+                  },
+                  "Property": "declared_batch_value_rub"
+                }
+              },
+              "queryRef": "fact_delivery_summary.declared_batch_value_rub",
+              "nativeQueryRef": "declared_batch_value_rub"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_delivery_summary"
+                    }
+                  },
+                  "Property": "price_mismatch_lines"
+                }
+              },
+              "queryRef": "fact_delivery_summary.price_mismatch_lines",
+              "nativeQueryRef": "price_mismatch_lines"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_delivery_summary"
+                    }
+                  },
+                  "Property": "net_weight_mismatch_lines"
+                }
+              },
+              "queryRef": "fact_delivery_summary.net_weight_mismatch_lines",
+              "nativeQueryRef": "net_weight_mismatch_lines"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

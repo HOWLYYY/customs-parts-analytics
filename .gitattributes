@@ -1,0 +1,13 @@
+* text=auto
+*.tmdl text eol=lf
+*.json text eol=lf
+*.pbip text eol=lf
+*.pbir text eol=lf
+*.pbism text eol=lf
+*.dax text eol=lf
+*.pq text eol=lf
+*.sqlite binary
+*.html text eol=lf
+*.md text eol=lf
+*.csv text eol=lf
+*.py text eol=lf

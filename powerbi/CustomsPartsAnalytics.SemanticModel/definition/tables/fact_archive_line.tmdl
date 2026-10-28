@@ -1,0 +1,39 @@
+table fact_archive_line
+	lineageTag: 30246f23-8186-582c-9357-84417dda6567
+
+	partition fact_archive_line = m
+		mode: import
+		source =
+				let
+				    Root = DataRoot,
+				    Source = Csv.Document(File.Contents(Root & "/fact_archive_line.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"archive_line_id", Int64.Type}, {"article", type text}, {"archive_source", type text}, {"in_shipment", Int64.Type}}, "en-US")
+				in
+				    Typed
+
+	column archive_line_id
+		dataType: int64
+		lineageTag: 11f8c60b-6688-531e-b5c2-3cbef4959c17
+		sourceColumn: archive_line_id
+		summarizeBy: none
+
+	column article
+		dataType: string
+		lineageTag: 3e3e7769-2920-5460-8369-424fa4721737
+		sourceColumn: article
+		summarizeBy: none
+
+	column archive_source
+		dataType: string
+		lineageTag: 4cace157-df71-5c59-9cea-e848f26521e7
+		sourceColumn: archive_source
+		summarizeBy: none
+
+	column in_shipment
+		dataType: int64
+		lineageTag: 31382d21-999d-5659-8df5-d53e68e19ed1
+		sourceColumn: in_shipment
+		summarizeBy: none
+
+	annotation PBI_ResultType = Table

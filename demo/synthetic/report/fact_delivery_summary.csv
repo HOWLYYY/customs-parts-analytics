@@ -1,0 +1,4 @@
+delivery_id,folder_name,imported_at,sort_order,line_count,distinct_articles,new_articles,repeat_articles,intro_lines,repeat_lines,total_quantity,declared_batch_value_rub,total_net_weight,total_gross_weight,price_mismatch_lines,net_weight_mismatch_lines,gross_weight_mismatch_lines,gross_below_net_lines,lines_missing_name_en,lines_missing_graph_description,lines_missing_tnved,distinct_tnved,distinct_countries
+1,SHIP-A,2026-01-15 09:00:00,1,4,3,3,0,3,1,21,1740,5.25,9.5,1,0,0,0,1,0,0,2,2
+2,SHIP-B,2026-02-20 09:00:00,2,3,3,1,2,1,2,11,200,2,0.75,0,1,1,1,1,1,1,2,3
+3,SHIP-C,2026-03-10 09:00:00,3,3,2,1,1,1,2,9,390,2.25,4.5,0,0,0,0,0,0,0,2,1

@@ -1,0 +1,4 @@
+delivery_id,folder_name,imported_at,sort_order
+1,SHIP-A,2026-01-15 09:00:00,1
+2,SHIP-B,2026-02-20 09:00:00,2
+3,SHIP-C,2026-03-10 09:00:00,3

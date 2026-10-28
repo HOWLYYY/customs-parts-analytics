@@ -1,0 +1,40 @@
+table dim_delivery
+	lineageTag: 4d48ccf8-cd5e-57c7-9aac-340e4045b8fe
+
+	partition dim_delivery = m
+		mode: import
+		source =
+				let
+				    Root = DataRoot,
+				    Source = Csv.Document(File.Contents(Root & "/dim_delivery.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"delivery_id", Int64.Type}, {"folder_name", type text}, {"imported_at", type text}, {"sort_order", Int64.Type}}, "en-US")
+				in
+				    Typed
+
+	column delivery_id
+		dataType: int64
+		lineageTag: d5da3afa-1d00-54a9-86b5-6b762f226520
+		sourceColumn: delivery_id
+		summarizeBy: none
+		isKey
+
+	column folder_name
+		dataType: string
+		lineageTag: edc27af5-70ca-5164-9de1-6f82989d3881
+		sourceColumn: folder_name
+		summarizeBy: none
+
+	column imported_at
+		dataType: string
+		lineageTag: d8d5435d-1174-5c1c-8395-02629b17b7b8
+		sourceColumn: imported_at
+		summarizeBy: none
+
+	column sort_order
+		dataType: int64
+		lineageTag: f53a5825-de80-5616-b4bd-e4bf9b5163f2
+		sourceColumn: sort_order
+		summarizeBy: none
+
+	annotation PBI_ResultType = Table

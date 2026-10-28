@@ -1,0 +1,163 @@
+table _Measures
+	lineageTag: 65325cdf-2b51-5fc1-ba97-2a5e0d988a18
+
+	partition _Measures = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows({{0}}, {"MeasureKey"})
+				in
+				    Source
+
+	column MeasureKey
+		dataType: int64
+		isHidden
+		lineageTag: 32ffde54-ed2c-5564-bb4e-656f4928fc00
+		sourceColumn: MeasureKey
+		summarizeBy: none
+
+	measure 'Total Shipment Lines' = COUNTROWS ( fact_shipment_line )
+		formatString: "#,0"
+		displayFolder: Volume
+		description: "Count of shipment lines."
+		lineageTag: 5c595f2d-c162-585b-9565-8f880992e2e7
+
+	measure 'Distinct Shipped Articles' = DISTINCTCOUNT ( fact_shipment_line[article] )
+		formatString: "#,0"
+		displayFolder: Volume
+		description: "Distinct articles present on shipment lines."
+		lineageTag: 2bd96f29-b60d-5d31-b5d5-ef00dd37d356
+
+	measure 'Intro Lines' = SUM ( fact_shipment_line[is_intro_line] )
+		formatString: "#,0"
+		displayFolder: Repeat articles
+		description: "Lines that are the first shipment line for an article."
+		lineageTag: 5c0c7335-df43-5908-a227-936251bbf62c
+
+	measure 'Repeat Lines' = [Total Shipment Lines] - [Intro Lines]
+		formatString: "#,0"
+		displayFolder: Repeat articles
+		description: "Shipment lines after an article's introduction line."
+		lineageTag: 015bc7f1-0c94-50a0-8ef2-ae699865c46d
+
+	measure 'Declared Batch Value RUB' = SUM ( fact_shipment_line[batch_price_rub] )
+		formatString: "#,0.00"
+		displayFolder: Value
+		description: "Sum of batch_price_rub. Declared line value, not revenue."
+		lineageTag: 6fb28257-fa2f-55a1-bd7d-b5bd7c2d1a7d
+
+	measure 'Total Quantity' = SUM ( fact_shipment_line[quantity] )
+		formatString: "#,0.00"
+		displayFolder: Volume
+		description: "Sum of shipment line quantity. Blank quantities are excluded."
+		lineageTag: 6e10178f-4cd6-5e0c-9c0a-c97c556b3fe6
+
+	measure 'Total Net Weight' = SUM ( fact_shipment_line[net_weight_total] )
+		formatString: "#,0.000"
+		displayFolder: Volume
+		description: "Sum of net_weight_total. Blank totals are excluded."
+		lineageTag: f630baed-99dd-5bce-aa55-ea08a8d52144
+
+	measure 'Total Gross Weight' = SUM ( fact_shipment_line[gross_weight_total] )
+		formatString: "#,0.000"
+		displayFolder: Volume
+		description: "Sum of gross_weight_total. Blank totals are excluded."
+		lineageTag: 4a1de944-8b1b-5a6b-a651-fcdd363018bf
+
+	measure 'Price Mismatch Lines' = SUM ( fact_shipment_line[price_mismatch] )
+		formatString: "#,0"
+		displayFolder: Data quality
+		description: "Lines where quantity times unit price disagrees with batch price."
+		lineageTag: 92c021a4-c846-5573-bbae-279a9adbfc58
+
+	measure 'Net Weight Mismatch Lines' = SUM ( fact_shipment_line[net_weight_mismatch] )
+		formatString: "#,0"
+		displayFolder: Data quality
+		description: "Lines where quantity times unit net weight disagrees with the net total."
+		lineageTag: 574d14c4-1f9d-5d65-b038-48d2651d1f2c
+
+	measure 'Gross Weight Mismatch Lines' = SUM ( fact_shipment_line[gross_weight_mismatch] )
+		formatString: "#,0"
+		displayFolder: Data quality
+		description: "Lines where quantity times unit gross weight disagrees with the gross total."
+		lineageTag: 311c4757-886f-5580-af69-04531677f741
+
+	measure 'Gross Below Net Lines' = SUM ( fact_shipment_line[gross_below_net] )
+		formatString: "#,0"
+		displayFolder: Data quality
+		description: "Lines where both weight totals are present and gross is below net."
+		lineageTag: f24c903f-d031-554e-bc51-e0190830de87
+
+	measure 'Catalog Parts' = COUNTROWS ( dim_part )
+		formatString: "#,0"
+		displayFolder: Catalog completeness
+		description: "Rows in the canonical parts card."
+		lineageTag: 9155a46f-f029-531c-a638-2eaf34a8b81e
+
+	measure 'Average Catalog Completeness' = DIVIDE ( SUM ( dim_part[filled_field_count] ), SUM ( dim_part[key_field_count] ) )
+		formatString: "0.00%"
+		displayFolder: Catalog completeness
+		description: "Filled key fields divided by key-field slots."
+		lineageTag: 1fc9fdf1-304d-5f9f-bf18-ef39e71d9811
+
+	measure 'Parts Missing Tech Doc' = CALCULATE ( COUNTROWS ( dim_part ), dim_part[tech_doc_present] = 0 )
+		formatString: "#,0"
+		displayFolder: Catalog completeness
+		description: "Parts with no tech_doc_path."
+		lineageTag: 1c98b357-876d-54b5-9a65-087de44d8bed
+
+	measure 'Parts Missing English Name' = CALCULATE ( COUNTROWS ( dim_part ), dim_part[has_name_en] = 0 )
+		formatString: "#,0"
+		displayFolder: Catalog completeness
+		description: "Parts with a blank name_en."
+		lineageTag: 1d5e5a9d-9438-5932-b756-c632d57a824b
+
+	measure 'Parts Missing Graph Description' = CALCULATE ( COUNTROWS ( dim_part ), dim_part[has_graph_description] = 0 )
+		formatString: "#,0"
+		displayFolder: Catalog completeness
+		description: "Parts with a blank graph_description."
+		lineageTag: 9346e225-03c7-545e-993d-3102a0ee4423
+
+	measure 'Parts Missing TNVED' = CALCULATE ( COUNTROWS ( dim_part ), dim_part[has_tnved] = 0 )
+		formatString: "#,0"
+		displayFolder: Catalog completeness
+		description: "Parts with a blank tnved code."
+		lineageTag: 99ba9339-3db6-5153-bb9a-707f57047a6c
+
+	measure 'Filename Without Tech Doc Path' = CALCULATE ( COUNTROWS ( dim_part ), dim_part[filename_without_path] = 1 )
+		formatString: "#,0"
+		displayFolder: Catalog completeness
+		description: "Parts that name a tech-doc file but have no stored path."
+		lineageTag: e8a399e8-cddf-58c0-b51c-12e5bde2e915
+
+	measure 'Archive Only Parts' = CALCULATE ( COUNTROWS ( dim_part ), dim_part[is_archive_only] = 1 )
+		formatString: "#,0"
+		displayFolder: Catalog completeness
+		description: "Parts that appear in the archive and on no shipment line."
+		lineageTag: 34d04431-19fc-5e0e-90c9-efd5edeaecfa
+
+	measure 'New Article Appearances' = SUM ( fact_delivery_article[is_new_article] )
+		formatString: "#,0"
+		displayFolder: Repeat articles
+		description: "Delivery-article pairs whose delivery is the article's first shipment."
+		lineageTag: d8596f5c-37e8-51f3-afd3-6c84adb593eb
+
+	measure 'Repeat Article Appearances' = SUM ( fact_delivery_article[is_repeat_article] )
+		formatString: "#,0"
+		displayFolder: Repeat articles
+		description: "Delivery-article pairs that follow the article's first shipment."
+		lineageTag: b04cfe2f-74d8-5eaa-b158-eccc9b02e9d1
+
+	measure 'Archive Lines' = COUNTROWS ( fact_archive_line )
+		formatString: "#,0"
+		displayFolder: Volume
+		description: "Rows imported from archive workbooks."
+		lineageTag: d3171f9d-5b82-55d2-ae66-e18feb989713
+
+	measure 'Quality Issue Rows' = COUNTROWS ( data_quality_issue )
+		formatString: "#,0"
+		displayFolder: Data quality
+		description: "Part and line data-quality issues exported by the analytics job."
+		lineageTag: 8358eade-7ef7-51c0-acc7-a6b59f067f72
+
+	annotation PBI_ResultType = Table

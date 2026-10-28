@@ -1,0 +1,38 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "name": "overview_card_10",
+  "position": {
+    "x": 1020,
+    "y": 170,
+    "z": 9,
+    "height": 130,
+    "width": 230,
+    "tabOrder": 9
+  },
+  "visual": {
+    "visualType": "card",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Gross Below Net Lines"
+                }
+              },
+              "queryRef": "_Measures.Gross Below Net Lines",
+              "nativeQueryRef": "Gross Below Net Lines"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

@@ -1,0 +1,137 @@
+table dim_part
+	lineageTag: dbf2d087-3cb4-511c-b033-8b9feaa81291
+
+	partition dim_part = m
+		mode: import
+		source =
+				let
+				    Root = DataRoot,
+				    Source = Csv.Document(File.Contents(Root & "/dim_part.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"article", type text}, {"name_en", type text}, {"name_ru", type text}, {"graph_description", type text}, {"tnved", type text}, {"manufacturer", type text}, {"country_origin", type text}, {"tech_doc_present", Int64.Type}, {"filename_without_path", Int64.Type}, {"filled_field_count", Int64.Type}, {"key_field_count", Int64.Type}, {"completeness_ratio", type number}, {"has_name_en", Int64.Type}, {"has_name_ru", Int64.Type}, {"has_graph_description", Int64.Type}, {"has_tnved", Int64.Type}, {"has_manufacturer", Int64.Type}, {"has_country_origin", Int64.Type}, {"has_shipment", Int64.Type}, {"is_archive_only", Int64.Type}}, "en-US")
+				in
+				    Typed
+
+	column article
+		dataType: string
+		lineageTag: b5dcd552-5800-5518-b515-cf1230c7c09e
+		sourceColumn: article
+		summarizeBy: none
+		isKey
+
+	column name_en
+		dataType: string
+		lineageTag: b77e878a-79b0-582b-b0bc-e6057d51f700
+		sourceColumn: name_en
+		summarizeBy: none
+
+	column name_ru
+		dataType: string
+		lineageTag: de6d9d8c-61ed-58e3-a8ff-e5bbd12c0a11
+		sourceColumn: name_ru
+		summarizeBy: none
+
+	column graph_description
+		dataType: string
+		lineageTag: 88645a02-62d2-5076-8aab-564727ecabfe
+		sourceColumn: graph_description
+		summarizeBy: none
+
+	column tnved
+		dataType: string
+		lineageTag: 09ddc819-b463-5a0d-9858-2a414c1fac44
+		sourceColumn: tnved
+		summarizeBy: none
+
+	column manufacturer
+		dataType: string
+		lineageTag: decba35c-9763-5da1-93aa-4d599e8678f7
+		sourceColumn: manufacturer
+		summarizeBy: none
+
+	column country_origin
+		dataType: string
+		lineageTag: a521f2d6-f852-5691-b688-27676cb5d544
+		sourceColumn: country_origin
+		summarizeBy: none
+
+	column tech_doc_present
+		dataType: int64
+		lineageTag: b4e84fa3-79b1-5e52-b47c-d4df7b5f5e6d
+		sourceColumn: tech_doc_present
+		summarizeBy: none
+
+	column filename_without_path
+		dataType: int64
+		lineageTag: d241634a-0f6a-5086-b120-608240058146
+		sourceColumn: filename_without_path
+		summarizeBy: none
+
+	column filled_field_count
+		dataType: int64
+		lineageTag: 4b01e346-bd8e-5ea9-b043-8f4a0710bf50
+		sourceColumn: filled_field_count
+		summarizeBy: none
+
+	column key_field_count
+		dataType: int64
+		lineageTag: 05040098-f0d5-5391-baaa-06bfb0a0762c
+		sourceColumn: key_field_count
+		summarizeBy: none
+
+	column completeness_ratio
+		dataType: double
+		formatString: "#,0.00"
+		lineageTag: 94409543-74fd-5588-a830-a1ebc0cb26cd
+		sourceColumn: completeness_ratio
+		summarizeBy: none
+
+	column has_name_en
+		dataType: int64
+		lineageTag: 65d8345c-7d29-58c2-bbcb-b74801d09323
+		sourceColumn: has_name_en
+		summarizeBy: none
+
+	column has_name_ru
+		dataType: int64
+		lineageTag: 2ab1802e-778e-53b5-9e0d-a3b155ea82b1
+		sourceColumn: has_name_ru
+		summarizeBy: none
+
+	column has_graph_description
+		dataType: int64
+		lineageTag: e44afaa2-6ad6-518e-80f2-1f82de24544d
+		sourceColumn: has_graph_description
+		summarizeBy: none
+
+	column has_tnved
+		dataType: int64
+		lineageTag: 0926d5b5-0d23-5a3c-9fd5-3d65e0d47e7c
+		sourceColumn: has_tnved
+		summarizeBy: none
+
+	column has_manufacturer
+		dataType: int64
+		lineageTag: 27d1fd2b-718e-52fc-a43d-6f019891c4b8
+		sourceColumn: has_manufacturer
+		summarizeBy: none
+
+	column has_country_origin
+		dataType: int64
+		lineageTag: a3a532f3-db53-5d45-a052-8f900ef7ec04
+		sourceColumn: has_country_origin
+		summarizeBy: none
+
+	column has_shipment
+		dataType: int64
+		lineageTag: 05a6a6ca-9b30-5494-82f6-ce0657b9bd0c
+		sourceColumn: has_shipment
+		summarizeBy: none
+
+	column is_archive_only
+		dataType: int64
+		lineageTag: 8a21cbd3-7f35-570d-8bdc-d80440299978
+		sourceColumn: is_archive_only
+		summarizeBy: none
+
+	annotation PBI_ResultType = Table
